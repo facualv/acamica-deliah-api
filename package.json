@@ -4,6 +4,7 @@
   "description": "RESTful API for Deliah-Resto Web App ",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "jest",
     "dev": "nodemon index.js"
   },
