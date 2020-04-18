@@ -1,32 +1,17 @@
-# White House Web API Standards
+# Deliah-Restó API
+Esta API fue desarrollada en el marco del tercer proyecto de la "carrera" de desarrollo web full stack de Acamica.
 
-- [Guidelines](#guidelines)
-- [Pragmatic REST](#pragmatic-rest)
-- [RESTful URLs](#restful-urls)
-- [HTTP Verbs](#http-verbs)
-- [Responses](#responses)
-- [Error handling](#error-handling)
-- [Versions](#versions)
-- [Record limits](#record-limits)
-- [Request & Response Examples](#request--response-examples)
-- [Mock Responses](#mock-responses)
-- [JSONP](#jsonp)
+## Stack Tecnológico
 
-## Guidelines
-
-### General guidelines for RESTful URLs
-
-- A URL identifies a resource.
-- URLs should include nouns, not verbs.
-- Use plural nouns only for consistency (no singular nouns).
-- Use HTTP verbs (GET, POST, PUT, DELETE) to operate on the collections and elements.
-- You shouldn’t need to go deeper than resource/identifier/resource.
-- Put the version number at the base of your URL, for example http://example.com/v1/path/to/resource.
-- URL v. header:
-  - If it changes the logic you write to handle the response, put it in the URL.
-  - If it doesn’t change the logic for each response, like OAuth info, put it in the header.
-- Specify optional fields in a comma separated list.
-- Formats should be in the form of api/v2/resource/{id}.json
+- Node.js
+- Express.js
+- Jest
+- Mongo DB
+- Mongoose
+- Swagger UI
+- Awilix Dependency Injection
+- GIT para control de versiones
+- Postman
 
 ## HTTP Verbs
 
@@ -42,112 +27,436 @@
 | /order              | Create new order              | List All orders   | Error          | Error          |
 | /order/:orderId     | Error                         | Show order        | Update order   | Delete order   |
 
-(Example from Web API Design, by Brian Mulloy, Apigee.)
-
-## Error handling
-
-Error responses include a common HTTP status code and a message for the end-user. For example:
+## Error Responso Format
 
     {
       "status" : 404,
       "message" : "Resource not found"
     }
 
-## Request & Response
+## API Endpoints
 
-### API Resources
+### Autenticacion
 
-- [GET /magazines](#get-magazines)
-- [GET /magazines/[id]](#get-magazinesid)
-- [POST /magazines/[id]/articles](#post-magazinesidarticles)
+#### POST /auth/signup
 
-### GET /magazines
+Url: https://deliah-api.herokuapp.com/vi/api/auth/signup
 
-Example: http://example.gov/api/v1/magazines.json
+Ejemplo del cuerpo de la peticion:
 
-Response body:
+{
+"username": "user",
+"fullname": "Common User",
+"email": "comUser@gmail.com",
+"phone": "3514121232",
+"password": "user"
+}
+
+#### POST /auth/login
+
+Url: https://deliah-api.herokuapp.com/vi/api/auth/signup
+
+Ejemplo del cuerpo de la peticion:
+
+{
+"username": "user",
+"fullname": "Common User",
+"email": "comUser@gmail.com",
+"phone": "3514121232",
+"password": "user"
+}
+
+Ejemplo de respuesta:
+
+{
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJpZCI6IjVlOWExYzc2OWU4YTc4MDAxNzgyNTU5NCIsImlzQWRtaW4iOnRydWV9LCJpYXQiOjE1ODcyMjMyNjcsImV4cCI6MTU4NzIzNzY2N30.f0W9YNh7BLzZgKoc6krqNj5Ge0lHLVk9nNVZ5b3F6UA",
+"user": {
+"isAdmin": true,
+"\_id": "5e9a1c769e8a780017825594",
+"username": "admin",
+"fullname": "Adminitrator",
+"email": "admin@gmail.com",
+"phone": "3514121232",
+"\_\_v": 0
+}
+}
+
+### Uuarios
+
+#### GET /users
+
+Url: https://deliah-api.herokuapp.com/vi/api/users
+
+Ejemplo de respuesta:
+
+[
+{
+"isAdmin": false,
+"_id": "5e9a1b839e8a780017825593",
+"username": "user",
+"fullname": "User without admin priviledges",
+"email": "comUser@gmail.com",
+"phone": "3514121232",
+"_v": 0
+},
+{
+"isAdmin": true,
+"_id": "5e9a1c769e8a780017825594",
+"username": "admin",
+"fullname": "Adminitrator",
+"email": "admin@gmail.com",
+"phone": "3514121232",
+"_v": 0
+}
+]
+
+### GET /users/[id]
+
+Url: https://deliah-api.herokuapp.com/vi/api/users/[id]
+
+Ejemplo de respuesta:
+{
+"isAdmin": true,
+"\_id": "5e9a1c769e8a780017825594",
+"username": "admin",
+"fullname": "Adminitrator",
+"email": "admin@gmail.com",
+"phone": "3514121232",
+"\_v": 0
+}
+
+### Productos
+
+#### GET /products
+
+Url: https://deliah-api.herokuapp.com/vi/api/products
+
+Ejemplo de respuesta:
+
+[
+{
+"_id": "5e9a1eb89e8a780017825595",
+"name": "Coca Cola",
+"price": 58,
+"__v": 0
+},
+{
+"_id": "5e9a1eea9e8a780017825596",
+"name": "Pizza",
+"price": 260,
+"__v": 0
+},
+{
+"_id": "5e9a1ef89e8a780017825597",
+"name": "Lomito Simple",
+"price": 300,
+"__v": 0
+}
+]
+
+#### GET /products/[id]
+
+Url: https://deliah-api.herokuapp.com/vi/api/products/[id]
+
+Ejemplo de respuesta:
+{
+"\_id": "5e9a1ef89e8a780017825597",
+"name": "Lomito Simple",
+"price": 300,
+"\_v": 0
+}
+
+#### POST /products/
+
+Url: https://deliah-api.herokuapp.com/vi/api/auth/products
+
+Ejemplo del cuerpo de la peticion:
+
+{
+"name": "Coca Cola",
+"price": 58
+}
+
+Ejemplo de respuesta:
+{
+"\_id": "5e9a1ef89e8a780017825597",
+"name": "Coca Cola",
+"price": 58,
+"\_v": 0
+}
+
+#### PATCH /products/[id]
+
+Url: https://deliah-api.herokuapp.com/vi/api/auth/products/[id]
+
+Ejemplo del cuerpo de la peticion para actualizar el precio:
+
+{
+"price": 100
+}
+
+Ejemplo de respuesta:
+{
+"\_id": "5e9a1ef89e8a780017825597",
+"name": "Coca Cola",
+"price": 100,
+"\_v": 0
+}
+
+#### DELETE /products/[id]
+
+Url: https://deliah-api.herokuapp.com/vi/api/auth/products/[id]
+
+Ejemplo de respuesta: true
+
+### Ordenes
+
+#### GET /orders
+
+Url: https://deliah-api.herokuapp.com/vi/api/orders
+
+Ejemplo de respuesta:
+
+[
+{
+"orderStatus": "recieved",
+"\_id": "5e9a22379e8a78001782559c",
+"user": {
+"isAdmin": false,
+"\_id": "5e9a1b839e8a780017825593",
+"username": "user",
+"fullname": "User without admin priviledges",
+"email": "comUser@gmail.com",
+"phone": "3514121232",
+"**v": 0
+},
+"cart": [
+{
+"quantity": 1,
+"\_id": "5e9a22379e8a78001782559d",
+"product": {
+"\_id": "5e9a1eb89e8a780017825595",
+"name": "Coca Cola",
+"price": 58,
+"**v": 0
+}
+},
+{
+"quantity": 1,
+"\_id": "5e9a22379e8a78001782559e",
+"product": {
+"\_id": "5e9a1eea9e8a780017825596",
+"name": "Pizza",
+"price": 260,
+"**v": 0
+}
+}
+],
+"paymentMethod": "cash",
+"date": "2020-04-17T21:40:07.211Z",
+"**v": 0
+}
 
     {
-        "metadata": {
-            "resultset": {
-                "count": 123,
-                "offset": 0,
-                "limit": 10
-            }
+        "orderStatus": "sended",
+        "_id": "5e9a22379e8a78001782559a",
+        "user": {
+            "isAdmin": false,
+            "_id": "5e9a1b839e8a680017825593",
+            "username": "user",
+            "fullname": "User without admin priviledges",
+            "email": "comUser@gmail.com",
+            "phone": "3514121232",
+            "__v": 0
         },
-        "results": [
+        "cart": [
             {
-                "id": "1234",
-                "type": "magazine",
-                "title": "Public Water Systems",
-                "tags": [
-                    {"id": "125", "name": "Environment"},
-                    {"id": "834", "name": "Water Quality"}
-                ],
-                "created": "1231621302"
+                "quantity": 1,
+                "_id": "5e9a22379e8a78001782559d",
+                "product": {
+                    "_id": "5e9a1eb89e8a780017825595",
+                    "name": "Coca Cola",
+                    "price": 58,
+                    "__v": 0
+                }
             },
             {
-                "id": 2351,
-                "type": "magazine",
-                "title": "Public Schools",
-                "tags": [
-                    {"id": "125", "name": "Elementary"},
-                    {"id": "834", "name": "Charter Schools"}
-                ],
-                "created": "126251302"
+                "quantity": 1,
+                "_id": "5e9a22379e8a78001782559e",
+                "product": {
+                    "_id": "5e9a1eea9e8a780017825596",
+                    "name": "Pizza",
+                    "price": 260,
+                    "__v": 0
+                }
             }
-            {
-                "id": 2351,
-                "type": "magazine",
-                "title": "Public Schools",
-                "tags": [
-                    {"id": "125", "name": "Pre-school"},
-                ],
-                "created": "126251302"
-            }
-        ]
-    }
-
-### GET /magazines/[id]
-
-Example: http://example.gov/api/v1/magazines/[id].json
-
-Response body:
-
-    {
-        "id": "1234",
-        "type": "magazine",
-        "title": "Public Water Systems",
-        "tags": [
-            {"id": "125", "name": "Environment"},
-            {"id": "834", "name": "Water Quality"}
         ],
-        "created": "1231621302"
+        "paymentMethod": "cash",
+        "date": "2020-04-17T21:40:07.211Z",
+        "__v": 0
     }
 
-### POST /magazines/[id]/articles
+]
 
-Example: Create – POST http://example.gov/api/v1/magazines/[id]/articles
+#### GET /orders/[id]
 
-Request body:
+Url: https://deliah-api.herokuapp.com/vi/api/orders/[id]
 
-    [
-        {
-            "title": "Raising Revenue",
-            "author_first_name": "Jane",
-            "author_last_name": "Smith",
-            "author_email": "jane.smith@example.gov",
-            "year": "2012",
-            "month": "August",
-            "day": "18",
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ante ut augue scelerisque ornare. Aliquam tempus rhoncus quam vel luctus. Sed scelerisque fermentum fringilla. Suspendisse tincidunt nisl a metus feugiat vitae vestibulum enim vulputate. Quisque vehicula dictum elit, vitae cursus libero auctor sed. Vestibulum fermentum elementum nunc. Proin aliquam erat in turpis vehicula sit amet tristique lorem blandit. Nam augue est, bibendum et ultrices non, interdum in est. Quisque gravida orci lobortis... "
-        }
-    ]
+Ejemplo de respuesta:
+{
+"orderStatus": "recieved",
+"\_id": "5e9a22379e8a78001782559c",
+"user": {
+"isAdmin": false,
+"\_id": "5e9a1b839e8a780017825593",
+"username": "user",
+"fullname": "User without admin priviledges",
+"email": "comUser@gmail.com",
+"phone": "3514121232",
+"**v": 0
+},
+"cart": [
+{
+"quantity": 1,
+"\_id": "5e9a22379e8a78001782559d",
+"product": {
+"\_id": "5e9a1eb89e8a780017825595",
+"name": "Coca Cola",
+"price": 58,
+"**v": 0
+}
+},
+{
+"quantity": 1,
+"\_id": "5e9a22379e8a78001782559e",
+"product": {
+"\_id": "5e9a1eea9e8a780017825596",
+"name": "Pizza",
+"price": 260,
+"**v": 0
+}
+}
+],
+"paymentMethod": "cash",
+"date": "2020-04-17T21:40:07.211Z",
+"**v": 0
+}
 
-## Mock Responses
+#### POST /orders/
 
-It is suggested that each resource accept a 'mock' parameter on the testing server. Passing this parameter should return a mock data response (bypassing the backend).
+Url: https://deliah-api.herokuapp.com/vi/api/auth/orders
 
-Implementing this feature early in development ensures that the API will exhibit consistent behavior, supporting a test driven development methodology.
+Ejemplo del cuerpo de la peticion:
 
-Note: If the mock parameter is included in a request to the production environment, an error should be raised.
+{
+"user": "5e9a1b839e8a780017825593",
+"cart": [
+{
+"product": "5e9a1eb89e8a780017825595",
+"quantity": 1
+},
+{
+"product": "5e9a1eea9e8a780017825596",
+"quantity": 1
+}
+],
+"paymentMethod": "cash"
+}
+
+Ejemplo de respuesta:
+{
+"orderStatus": "recieved",
+"\_id": "5e9a22379e8a78001782559c",
+"user": {
+"isAdmin": false,
+"\_id": "5e9a1b839e8a780017825593",
+"username": "user",
+"fullname": "User without admin priviledges",
+"email": "comUser@gmail.com",
+"phone": "3514121232",
+"**v": 0
+},
+"cart": [
+{
+"quantity": 1,
+"\_id": "5e9a22379e8a78001782559d",
+"product": {
+"\_id": "5e9a1eb89e8a780017825595",
+"name": "Coca Cola",
+"price": 58,
+"**v": 0
+}
+},
+{
+"quantity": 1,
+"\_id": "5e9a22379e8a78001782559e",
+"product": {
+"\_id": "5e9a1eea9e8a780017825596",
+"name": "Pizza",
+"price": 260,
+"**v": 0
+}
+}
+],
+"paymentMethod": "cash",
+"date": "2020-04-17T21:40:07.211Z",
+"**v": 0
+}
+
+#### PATCH /orders/[id]
+
+Url: https://deliah-api.herokuapp.com/vi/api/auth/orders/[id]
+
+Ejemplo del cuerpo de la peticion para actualizar el precio:
+
+{
+"orderStatus": "preparing"
+}
+
+Ejemplo de respuesta:
+{
+"orderStatus": "preparing",
+"\_id": "5e9a22379e8a78001782559c",
+"user": {
+"isAdmin": false,
+"\_id": "5e9a1b839e8a780017825593",
+"username": "user",
+"fullname": "User without admin priviledges",
+"email": "comUser@gmail.com",
+"phone": "3514121232",
+"**v": 0
+},
+"cart": [
+{
+"quantity": 1,
+"\_id": "5e9a22379e8a78001782559d",
+"product": {
+"\_id": "5e9a1eb89e8a780017825595",
+"name": "Coca Cola",
+"price": 58,
+"**v": 0
+}
+},
+{
+"quantity": 1,
+"\_id": "5e9a22379e8a78001782559e",
+"product": {
+"\_id": "5e9a1eea9e8a780017825596",
+"name": "Pizza",
+"price": 260,
+"**v": 0
+}
+}
+],
+"paymentMethod": "cash",
+"date": "2020-04-17T21:40:07.211Z",
+"**v": 0
+}
+
+#### DELETE /orders/[id]
+
+Url: https://deliah-api.herokuapp.com/vi/api/auth/orders/[id]
+
+Ejemplo de respuesta:
+
+true
