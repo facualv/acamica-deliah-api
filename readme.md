@@ -14,7 +14,7 @@ Esta API fue desarrollada en el marco del tercer proyecto de la "carrera" de des
 - GIT para control de versiones
 - Postman
 
-## HTTP Verbs
+## Verbos HTTP
 
 | HTTP METHOD         | POST                          | GET               | PUT            | DELETE         |
 | ------------------- | ----------------------------- | ----------------- | -------------- | -------------- |
@@ -28,7 +28,7 @@ Esta API fue desarrollada en el marco del tercer proyecto de la "carrera" de des
 | /order              | Create new order              | List All orders   | Error          | Error          |
 | /order/:orderId     | Error                         | Show order        | Update order   | Delete order   |
 
-## Error Responso Format
+## Formato de respuesta ante errores
 
     {
       "status" : 404,
@@ -36,6 +36,10 @@ Esta API fue desarrollada en el marco del tercer proyecto de la "carrera" de des
     }
 
 ## API Endpoints
+
+### Documentacion
+
+Url: https://deliah-api.herokuapp.com/api-docs
 
 ### Autenticacion
 
