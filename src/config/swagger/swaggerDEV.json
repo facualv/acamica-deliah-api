@@ -32,7 +32,7 @@
       "description": "Authentication endpoints"
     }
   ],
-  "schemes": ["http", "https"],
+  "schemes": ["https"],
   "paths": {
     "/auth/signup": {
       "post": {
