@@ -312,7 +312,7 @@ Ejemplo de respuesta:
         "**v": 0
         }
 
-    #### POST /orders/
+#### POST /orders/
 
     Url: https://deliah-api.herokuapp.com/vi/api/auth/orders
 
